@@ -35,7 +35,7 @@ jobs:
           key                  = "${{ env.AzurermBackendBlobName }}"
           EOT
           chmod +r  ${GITHUB_WORKSPACE}/azurerm.tfbackend
-          tail  ${GITHUB_WORKSPACE} /azurerm.tfbackend
+          tail  ${GITHUB_WORKSPACE}/azurerm.tfbackend
    
         # Get IP and make available to other steps and jobs
       - name: "Check the Terraform backend config file"
