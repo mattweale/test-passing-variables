@@ -13,7 +13,7 @@ jobs:
         AzurermBackendContainerName: ${{ secrets.AZURE_ARM_BACKEND_CONTAINER }}
         AzurermBackendBlobName: ${{ secrets.AZURE_ARM_BACKEND_BLOB }}
  
-        environment: test
+        environment: Test
       
       # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
       defaults:
@@ -28,16 +28,21 @@ jobs:
         # Create Terraform Backend Config File
       - name: "Create Terraform Backend Config File"
         run: | 
-          cat <<EOT  >> ${{parameters.TerraformDirectory}}/azurerm.tfbackend
+          cat <<EOT  >> ${{env.GITHUB_WORKSPACE}}/azurerm.tfbackend
           resource_group_name  = "${{env.AzurermBackendResourceGroupName}}"
           storage_account_name = "${{env.AzurermBackendStorageAccountName}}"
           container_name       = "${{env.AzurermBackendContainerName}}" 
           key                  = "${{env.AzurermBackendBlobName}}"
           EOT
-          chmod +r ${{parameters.TerraformDirectory}}/azurerm.tfbackend
+          chmod +r ${{env.GITHUB_WORKSPACE}}/azurerm.tfbackend
       
-      
+   
         # Get IP and make available to other steps and jobs
+      - name: "Check the Terraform backend config file"
+        run: | 
+          tail ${{env.GITHUB_WORKSPACE}}/azurerm.tfbackend
+      
+      # Get IP and make available to other steps and jobs
       - name: "Get the build agent IP"
         run: | 
           echo "TF_VAR_BUILD_AGENT_IP=$(curl 'https://api.ipify.org')" >> $GITHUB_ENV
