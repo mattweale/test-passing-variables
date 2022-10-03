@@ -22,6 +22,12 @@ jobs:
           $output=${{ env.TF_VAR_BUILD_AGENT_IP }}
           Write-Output "::set-output name=build_ip::$output"
 
+        # Show IP
+      - name: "Echo the IP"
+        run: | 
+          echo ${{ env.TF_VAR_BUILD_AGENT_IP }}
+          #Write-Output "::set-output name=build_ip::$output"
+
     access_build_agent_ip:
       name: Accessing the build agent IP from a different job
       runs-on: ubuntu-latest
