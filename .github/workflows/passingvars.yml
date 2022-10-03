@@ -16,7 +16,6 @@ jobs:
       
       steps:
         # Get IP and make available to other steps and jobs
-      - id: get_ip
       - name: "Get the build agent IP"
         run: | 
           echo "TF_VAR_BUILD_AGENT_IP=$(curl 'https://api.ipify.org')" >> $GITHUB_ENV
