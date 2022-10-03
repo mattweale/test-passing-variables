@@ -28,14 +28,14 @@ jobs:
         # Create Terraform Backend Config File
       - name: "Create Terraform Backend Config File"
         run: | 
-          cat <<EOT  >> ${{ github.workspace }}/azurerm.tfbackend
+          cat <<EOT  >>  ${GITHUB_WORKSPACE}/azurerm.tfbackend
           resource_group_name  = "${{ env.AzurermBackendResourceGroupName }}"
           storage_account_name = "${{ env.AzurermBackendStorageAccountName }}"
           container_name       = "${{ env.AzurermBackendContainerName }}" 
           key                  = "${{ env.AzurermBackendBlobName }}"
           EOT
-          chmod +r ${{ github.workspace }}/azurerm.tfbackend
-          tail ${{ github.workspace }}/azurerm.tfbackend
+          chmod +r  ${GITHUB_WORKSPACE}/azurerm.tfbackend
+          tail  ${GITHUB_WORKSPACE} /azurerm.tfbackend
    
         # Get IP and make available to other steps and jobs
       - name: "Check the Terraform backend config file"
