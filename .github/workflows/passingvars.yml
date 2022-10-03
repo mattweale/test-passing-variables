@@ -25,7 +25,7 @@ jobs:
         run: | 
           echo ${{ env.TF_VAR_BUILD_AGENT_IP }}
           output=${{ env.TF_VAR_BUILD_AGENT_IP }}
-          echo "Contect on variable output is:"
+          echo "Contect on variable output is:"$output
           #Write-Output "::set-output name=build_ip::$output"
 
     access_build_agent_ip:
