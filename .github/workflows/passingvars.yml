@@ -7,7 +7,13 @@ jobs:
     get_build_agent_ip:
       name: Passing environment variables between steps and jobs
       runs-on: ubuntu-latest
-      environment: test
+      env:
+        AzurermBackendResourceGroupName: ${{ secrets.AZURE_ARM_BACKEND_RG }}
+        AzurermBackendStorageAccountName: ${{ secrets.AZURE_ARM_BACKEND_SA }}
+        AzurermBackendContainerName: ${{ secrets.AZURE_ARM_BACKEND_CONTAINER }}
+        AzurermBackendBlobName: ${{ secrets.AZURE_ARM_BACKEND_BLOB }}
+ 
+        environment: test
       
       # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
       defaults:
@@ -15,6 +21,22 @@ jobs:
           shell: bash
       
       steps:
+        # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+        # Create Terraform Backend Config File
+      - name: "Create Terraform Backend Config File"
+        run: | 
+          cat <<EOT  >> ${{parameters.TerraformDirectory}}/azurerm.tfbackend
+          resource_group_name  = "${{env.AzurermBackendResourceGroupName}}"
+          storage_account_name = "${{env.AzurermBackendStorageAccountName}}"
+          container_name       = "${{env.AzurermBackendContainerName}}" 
+          key                  = "${{env.AzurermBackendBlobName}}"
+          EOT
+          chmod +r ${{parameters.TerraformDirectory}}/azurerm.tfbackend
+      
+      
         # Get IP and make available to other steps and jobs
       - name: "Get the build agent IP"
         run: | 
