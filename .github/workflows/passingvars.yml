@@ -24,6 +24,8 @@ jobs:
       - name: "Echo the IP"
         run: | 
           echo ${{ env.TF_VAR_BUILD_AGENT_IP }}
+          output=${{ env.TF_VAR_BUILD_AGENT_IP }}
+          echo "Contect on variable output is:"
           #Write-Output "::set-output name=build_ip::$output"
 
     access_build_agent_ip:
