@@ -35,4 +35,4 @@ jobs:
       steps:
       - name: Access the environment variable from another job
         run: |
-          echo "The environment varaible passed from the previous job is: ${{ need.get_ip.output.build_ip }}"
+          echo "The environment varaible passed from the previous job is: ${{ needs.get_ip.output.build_ip }}"
