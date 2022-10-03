@@ -26,18 +26,3 @@ jobs:
       - name: Access the environment variable
         run: |
           echo "The environment varaible passed from the previous step is: ${{ env.TF_VAR_BUILD_AGENT_IP }}"
-     
-    access_build_agent_ip:
-      name: Accessing the build agent IP from a different job
-      runs-on: ubuntu-latest
-      environment: test
-      
-      # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-      defaults:
-        run:
-          shell: bash
-      
-      steps:
-      - name: Access the environment variable from another job
-        run: |
-          echo "The environment varaible passed from the previous job is: ${{ need.get_ip.output.build_ip }}"
