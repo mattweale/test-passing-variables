@@ -19,8 +19,8 @@ jobs:
       - name: "Get the build agent IP"
         run: | 
           echo "TF_VAR_BUILD_AGENT_IP=$(curl 'https://api.ipify.org')" >> $GITHUB_ENV
-          $output="99.99.99.99" #${{ env.TF_VAR_BUILD_AGENT_IP }}
-          echo "::set-output name=build_ip::$output"
+          $output=${{ env.TF_VAR_BUILD_AGENT_IP }}
+          Write-Output "::set-output name=build_ip::$output"
 
     access_build_agent_ip:
       name: Accessing the build agent IP from a different job
